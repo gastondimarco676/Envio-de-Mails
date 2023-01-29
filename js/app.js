@@ -4,14 +4,18 @@ document.addEventListener('DOMContentLoaded',function(){
     const InputAsunto = document.querySelector('#asunto')
     const InputMensaje = document.querySelector('#mensaje')
 
-    InputEmail.addEventListener('blur',function(evento){
-        console.log(evento.target.value)
-    })
+    InputEmail.addEventListener('blur',validar)
+    InputAsunto.addEventListener('blur',validar)
+    InputMensaje.addEventListener('blur',validar)
+    
+    function validar(e) {
+        console.log('desde la funcion de validar')
+        console.log(e.target.value)
+    }
+     }
+     )
 
-    console.log(InputEmail)
-    console.log(InputAsunto)
-    console.log(InputMensaje)
 
 
 
-})
+
