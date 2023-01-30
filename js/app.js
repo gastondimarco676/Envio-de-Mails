@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded',function(){
     InputMensaje.addEventListener('blur',validar)
     
     function validar(e) {
-        console.log('desde la funcion de validar')
-        console.log(e.target.value)
+        e.target.value.trim()===''?console.log('nada che'):console.log('ahora si')
     }
      }
      )
