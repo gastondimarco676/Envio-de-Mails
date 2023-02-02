@@ -12,14 +12,16 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 )
 function validar(e) {
-    e.target.value.trim() === '' ? mostrarAlerta() : console.log('ahora si')
+    //console.log(e.target.id)
+    //console.log(e.target.parentElement.nextElementSibling)
+    e.target.value.trim() === '' ? mostrarAlerta(`El campo ${e.target.id} es obligatorio`,e.target.parentElement) : console.log('ahora si')
 }
 
-const mostrarAlerta = ()=>{
+const mostrarAlerta = (mensaje,referencia)=>{
     const alerta = document.createElement('p')
-    alerta.textContent ='no hay nada che, imprimiendo en html porque nadie navega con la consola abierta'
-    alerta.classList.add('bg-red-600','text-white','p-2')
-    formulario.appendChild(alerta)
+    alerta.textContent = mensaje
+    alerta.classList.add('bg-red-600','text-white','p-2','text-center')
+    referencia.appendChild(alerta)
 }
 
 
