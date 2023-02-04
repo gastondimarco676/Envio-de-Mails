@@ -15,7 +15,11 @@ function validar(e) {
     //console.log(e.target.id)
     //console.log(e.target.parentElement.nextElementSibling)
     
-    e.target.value.trim() === '' ? mostrarAlerta(`El campo ${e.target.id} es obligatorio`,e.target.parentElement) : console.log('ahora si')
+    if(e.target.value.trim() === '') {mostrarAlerta(`El campo ${e.target.id} es obligatorio`,e.target.parentElement)
+    return;} 
+    
+    limpiarAlerta(e.target.parentElement)
+    console.log('despues del IF')
 }
 
 const mostrarAlerta = (mensaje,referencia)=>{
@@ -27,6 +31,10 @@ const mostrarAlerta = (mensaje,referencia)=>{
     referencia.appendChild(alerta)
 }
 
-
+function limpiarAlerta(referencia){
+    //const referencia = e.target.parentElement
+    const claseAlerta = referencia.querySelector('.bg-red-600')
+    referencia.removeChild(claseAlerta)
+}
 
 
