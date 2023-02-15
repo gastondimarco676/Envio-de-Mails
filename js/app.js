@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         asunto:'',
         mensaje:''
     }
+    const btnSubmit = document.querySelector('#formulario button[type="submit"]')
 //console.log(mailObjeto)
 
 
@@ -24,19 +25,24 @@ document.addEventListener('DOMContentLoaded', function () {
         
         if(e.target.value.trim() === '') {
         mostrarAlerta(`El campo ${e.target.id} es obligatorio`,e.target.parentElement)
+        //comprobarEmail()
+        mailObjeto[e.target.name] = ''
+        comprobarEmail()
         return;} 
         
         if(!validarEmail(e.target.value) && e.target.id==='email'){
             mostrarAlerta('el mail no es válido',e.target.parentElement)
+            mailObjeto[e.target.name] = ''
+            comprobarEmail()
+            //comprobarEmail()
             return;
         } 
         limpiarAlerta(e.target.parentElement)
     
         //Asignar valores
         mailObjeto[e.target.name] = e.target.value.trim().toLowerCase();
-        console.log(mailObjeto)
+        //console.log(mailObjeto)
         comprobarEmail()
-    
     }
     
     const mostrarAlerta = (mensaje,referencia)=>{
@@ -62,11 +68,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function comprobarEmail(){
-
-        console.log(Object.values(mailObjeto).includes(''))
+        console.log(mailObjeto)
+ if(Object.values(mailObjeto).includes(''))
+ {btnSubmit.classList.add('opacity-50')
+ btnSubmit.disabled =true
+ return;
     }
-    
-    
+btnSubmit.classList.remove('opacity-50')
+btnSubmit.disabled =false
+     }
     
 }
 )
