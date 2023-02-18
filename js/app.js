@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const btnSubmit = document.querySelector('#formulario button[type="submit"]')
     const btnReset = document.querySelector('#formulario button[type="reset"]')
+    const spinner = document.querySelector("#spinner")
     //console.log(mailObjeto)
 
 
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         comprobarEmail()
     }
     })
+    formulario.addEventListener('submit',enviarEmail)
 
 
     function validar(e) {
@@ -93,4 +95,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 }
 
+
+
 )
+function enviarEmail(e){
+    e.preventDefault()
+    console.log('enviando')
+    spinner.classList.add('flex')
+    spinner.classList.remove('hidden')
+    
+    }
