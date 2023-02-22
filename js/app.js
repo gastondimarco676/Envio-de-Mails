@@ -18,19 +18,20 @@ document.addEventListener('DOMContentLoaded', function () {
     InputEmail.addEventListener('input', validar)
     InputAsunto.addEventListener('input', validar)
     InputMensaje.addEventListener('input', validar)
-    btnReset.addEventListener('click', function(e){
+    btnReset.addEventListener('click', function (e) {
         e.preventDefault;
-        const pregunta = prompt('estas seguro?')
-       if(pregunta==='si'){
-        formulario.reset 
-        mailObjeto.email= '',
-        mailObjeto.asunto= '',
-        mailObjeto.mensaje= ''
-        console.log(mailObjeto)
-        comprobarEmail()
-    }
-    })
-    formulario.addEventListener('submit',enviarEmail)
+        /*const pregunta = prompt('estas seguro?')
+        if (pregunta === 'si') {
+            formulario.reset
+            mailObjeto.email = '',
+                mailObjeto.asunto = '',
+                mailObjeto.mensaje = ''
+            console.log(mailObjeto)*/
+            //comprobarEmail()
+            resetearFormulario()
+        }
+    )
+    formulario.addEventListener('submit', enviarEmail)
 
 
     function validar(e) {
@@ -93,15 +94,30 @@ document.addEventListener('DOMContentLoaded', function () {
         btnSubmit.classList.remove('opacity-50')
         btnSubmit.disabled = false
     }
-}
 
-
-
-)
-function enviarEmail(e){
-    e.preventDefault()
-    console.log('enviando')
-    spinner.classList.add('flex')
-    spinner.classList.remove('hidden')
+    function enviarEmail(e) {
+        e.preventDefault()
+        console.log('enviando')
+        spinner.classList.add('flex')
+        spinner.classList.remove('hidden')
+        setTimeout(() => {
+            spinner.classList.remove('flex')
+            spinner.classList.add('hidden')
     
+            resetearFormulario()
+            
+        }, 3000)
     }
+    function resetearFormulario() {
+        mailObjeto.email = '',
+            mailObjeto.asunto = '',
+            mailObjeto.mensaje = ''
+        formulario.reset()
+        comprobarEmail()
+    }
+
+
+}
+)
+
+
