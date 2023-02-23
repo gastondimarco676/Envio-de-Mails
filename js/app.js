@@ -105,8 +105,17 @@ document.addEventListener('DOMContentLoaded', function () {
             spinner.classList.add('hidden')
     
             resetearFormulario()
-            
+
+            const alertaSuccess = document.createElement('p')
+            alertaSuccess.classList.add('bg-green-500','text-white','p-2','text-center',
+            'rounded-lg','font-bold','text-sm','uppercase')
+            alertaSuccess.textContent = 'se ha enviado tu mail!'
+            formulario.appendChild(alertaSuccess)
+            setTimeout(()=>{
+                alertaSuccess.remove()
+            },3000)
         }, 3000)
+       
     }
     function resetearFormulario() {
         mailObjeto.email = '',
