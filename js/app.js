@@ -47,18 +47,21 @@ document.addEventListener('DOMContentLoaded', function () {
             
             return;
         }
-        if (!validarCC(e.target.value) && e.target.id === 'CC') {
+        if (!validarCC(e.target.value) && e.target.id === 'CC' && e.target.value!='') {
             mostrarAlerta('el mail no es válido', e.target.parentElement)
             mailObjeto[e.target.name] = ''
             comprobarEmail()
             return;
         }
-
+        
 
         limpiarAlerta(e.target.parentElement)
 
         //Asignar valores
         mailObjeto[e.target.name] = e.target.value.trim().toLowerCase()
+        /*if(InputCC.value!=''){
+            delete mailObjeto.CC
+        }*/
         console.log(mailObjeto)
         comprobarEmail()
     }
@@ -94,8 +97,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function comprobarEmail() {
         console.log(mailObjeto)
-        if (Object.values(mailObjeto).includes('')) {
-           //if (mailObjeto.email ='' || mailObjeto.asunto =''|| mailObjeto.mensaje =''){
+        if(mailObjeto.CC=''){
+            delete mailObjeto.CC
+        }
+       if (Object.values(mailObjeto).includes('')) {
+           //if ((mailObjeto.email ='') || (mailObjeto.asunto ='')|| (mailObjeto.mensaje ='')){
+            
             btnSubmit.classList.add('opacity-50')
             btnSubmit.disabled = true
             return;
@@ -138,5 +145,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }
 )
-
 
