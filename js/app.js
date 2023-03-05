@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const formulario = document.querySelector('#formulario')
     const mailObjeto = {
         email: '',
-        CC:'',
         asunto: '',
         mensaje: ''
     }
@@ -21,6 +20,17 @@ document.addEventListener('DOMContentLoaded', function () {
     InputAsunto.addEventListener('input', validar)
     InputMensaje.addEventListener('input', validar)
     InputCC.addEventListener('input', validar)
+    InputCC.addEventListener('input', (e) => {
+//con este segundo evento input, se resolvio el problema del alert que no se removia al estar vacio el campo CC
+        const claseAlerta = CC.parentElement.querySelector('.bg-red-600')
+        if (InputCC.value === '' && claseAlerta) {
+          claseAlerta.remove()
+        } else if (!validarEmail(InputCC.value)) {
+          mostrarAlerta('El correo electrónico no es válido', CC.parentElement)
+        } else if (claseAlerta) {
+          claseAlerta.remove()
+        }
+      })
     btnReset.addEventListener('click', function (e) {
         e.preventDefault;
             resetearFormulario()
@@ -36,7 +46,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.value.trim() === '' && e.target.id != 'CC') {
             mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement)
             mailObjeto[e.target.name] = ''
+            
             comprobarEmail()
+            delete(mailObjeto.CC)
             return;
         }
 
@@ -47,23 +59,43 @@ document.addEventListener('DOMContentLoaded', function () {
             
             return;
         }
-        if (!validarCC(e.target.value) && e.target.id === 'CC' && e.target.value!='') {
+
+        if (!validarEmail(e.target.value) && e.target.id === 'CC') {
             mostrarAlerta('el mail no es válido', e.target.parentElement)
             mailObjeto[e.target.name] = ''
+            delete mailObjeto.CC
             comprobarEmail()
             return;
         }
+        //si hay algo en CC, pero no es un mail
+        /*if (mailObjeto.hasOwnProperty('CC') && !validarCC(e.target.value) && e.target.value!='') {
+            mostrarAlerta('el mail no es válido', e.target.parentElement)
+            mailObjeto[e.target.name] = ''
+            mailObjeto.CC = e.target.value
+            delete(mailObjeto.CC)
+            comprobarEmail()
+            return;
+        }
+        if (mailObjeto.hasOwnProperty('CC') && mailObjeto.CC.trim() === '') {
+            delete mailObjeto.CC;
+            //limpiarAlerta(e.target.parentElement)
+          }*/
+
         
+          
 
         limpiarAlerta(e.target.parentElement)
 
+        const claseAlerta = CC.parentElement.querySelector('.bg-red-600')
+        if (InputCC.value === '' && claseAlerta) {
+            limpiarAlerta(e.target.parentElement)
+          }
+
+
         //Asignar valores
         mailObjeto[e.target.name] = e.target.value.trim().toLowerCase()
-        /*if(InputCC.value!=''){
-            delete mailObjeto.CC
-        }*/
-        console.log(mailObjeto)
-        comprobarEmail()
+
+        comprobarEmail()   
     }
 
     const mostrarAlerta = (mensaje, referencia) => {
@@ -80,7 +112,10 @@ document.addEventListener('DOMContentLoaded', function () {
         //const referencia = e.target.parentElement
         const claseAlerta = referencia.querySelector('.bg-red-600')
         if (claseAlerta) { claseAlerta.remove() }
-        //if(e.target.id==='CC' && e.target.value===''){claseAlerta.remove()}
+        //if(e.target.id==='CC' && e.target.value===''){claseAlerta.remove()}//no esta definido el e
+        //if(mailObjeto.CC.value === ''){ claseAlerta.remove() }
+        //if(!InputCC.value) { claseAlerta.remove() }
+        
     }
     function validarEmail(InputEmail) {
         const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
@@ -97,9 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function comprobarEmail() {
         console.log(mailObjeto)
-        if(mailObjeto.CC=''){
-            delete mailObjeto.CC
-        }
+        
        if (Object.values(mailObjeto).includes('')) {
            //if ((mailObjeto.email ='') || (mailObjeto.asunto ='')|| (mailObjeto.mensaje ='')){
             
@@ -135,14 +168,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function resetearFormulario() {
         mailObjeto.email = '',
-        mailObjeto.CC = '',
             mailObjeto.asunto = '',
             mailObjeto.mensaje = ''
-        formulario.reset()
+        formulario.reset(),
+        delete mailObjeto.CC,
         comprobarEmail()
     }
-
-
 }
 )
-
